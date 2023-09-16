@@ -32,8 +32,13 @@ std::map<std::string, int> addProduct(std::map<std::string, int>& database)
     int quantity;
     std::cout << "Enter the article and quantity of the product: " << std::endl;
     std::cin >> vendorСode >> quantity;
-
-    database[vendorСode] += quantity;
+    if (database.find(vendorСode) == database.end())
+    {
+        std::cout << "Erorr" << std::endl;
+    } else
+    {
+        database[vendorСode] += quantity;
+    }
     return database;
 }
 
