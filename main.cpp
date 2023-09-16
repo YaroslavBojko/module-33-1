@@ -26,10 +26,34 @@ void print(std::map<std::string, int>& database)
     }
 }
 
+std::map<std::string, int> addProduct(std::map<std::string, int>& database, std::string vendorСode, int quantity)
+{
+    database[vendorСode] += quantity;
+
+    return database;
+}
+
 int main() {
     std::map<std::string, int> database;
-
     databaseEntry(database);
     print(database);
+
+
+    std::string command;
+    while (command != "exit")
+    {
+        std::cout << "Enter the command (add, remove, exit): " << std::endl;
+        std::cin >> command;
+
+        std::string vendorСode;
+        int quantity;
+        if(command == "add")
+        {
+            std::cout << "Enter the article and quantity of the product: " << std::endl;
+            std::cin >> vendorСode >> quantity;
+            addProduct(database, vendorСode, quantity);
+        }
+        print(database);
+    }
 
 }
