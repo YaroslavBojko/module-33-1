@@ -37,6 +37,17 @@ std::map<std::string, int> addProduct(std::map<std::string, int>& database)
     return database;
 }
 
+std::map<std::string, int> removeProduct(std::map<std::string, int>& database)
+{
+    std::string vendorСode;
+    int quantity;
+    std::cout << "Enter the article and quantity of the product: " << std::endl;
+    std::cin >> vendorСode >> quantity;
+
+    database[vendorСode] -= quantity;
+    return database;
+}
+
 int main() {
     std::map<std::string, int> database;
     databaseEntry(database);
@@ -49,8 +60,8 @@ int main() {
         std::cout << "Enter the command (add, remove, exit): " << std::endl;
         std::cin >> command;
 
-
-        if(command == "add") addProduct(database);
+        if (command == "add") addProduct(database);
+        if (command == "remove") removeProduct(database);
 
         print(database);
     }
