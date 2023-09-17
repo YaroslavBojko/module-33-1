@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include_next <exception>
 
 std::map<std::string, int> databaseEntry(std::map<std::string, int>& database)
 {
@@ -34,7 +35,7 @@ std::map<std::string, int> addProduct(std::map<std::string, int>& database)
     std::cin >> vendorСode >> quantity;
     if (database.find(vendorСode) == database.end())
     {
-        std::cout << "Erorr" << std::endl;
+        throw std::exception();
     } else
     {
         database[vendorСode] += quantity;
@@ -65,7 +66,16 @@ int main() {
         std::cout << "Enter the command (add, remove, exit): " << std::endl;
         std::cin >> command;
 
-        if (command == "add") addProduct(database);
+        if (command == "add")
+        {
+            try {
+                addProduct(database);
+            }
+            catch (const std::exception& x) {
+                std::cerr << "The article does not exist!!!" << x.what() << std::endl;
+            }
+        }
+
         if (command == "remove") removeProduct(database);
 
         print(database);
