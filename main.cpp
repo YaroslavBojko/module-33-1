@@ -33,9 +33,10 @@ std::map<std::string, int> addProduct(std::map<std::string, int>& database)
     int quantity;
     std::cout << "Enter the article and quantity of the product: " << std::endl;
     std::cin >> vendorСode >> quantity;
+
     if (database.find(vendorСode) == database.end())
     {
-        throw std::exception();
+        throw std::invalid_argument(database.find(vendorСode) == database.end() ? "incorrect article" : "&&&");
     } else
     {
         database[vendorСode] += quantity;
@@ -50,7 +51,13 @@ std::map<std::string, int> removeProduct(std::map<std::string, int>& database)
     std::cout << "Enter the article and quantity of the product: " << std::endl;
     std::cin >> vendorСode >> quantity;
 
-    database[vendorСode] -= quantity;
+    if (database.find(vendorСode) == database.end())
+    {
+        throw std::invalid_argument(database.find(vendorСode) == database.end() ? "incorrect article" : "&&&");
+    } else
+    {
+        database[vendorСode] -= quantity;
+    }
     return database;
 }
 
@@ -71,13 +78,20 @@ int main() {
             try {
                 addProduct(database);
             }
-            catch (const std::exception& x) {
-                std::cerr << "The article does not exist!!!" << x.what() << std::endl;
+            catch (const std::invalid_argument& x) {
+                std::cerr << "Incorrect information: " << x.what() << std::endl;
             }
         }
 
-        if (command == "remove") removeProduct(database);
-
+        if (command == "remove")
+        {
+            try {
+                removeProduct(database);
+            }
+            catch (const std::invalid_argument& x) {
+                std::cerr << "Incorrect information: " << x.what() << std::endl;
+            }
+        }
         print(database);
     }
 
