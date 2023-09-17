@@ -80,6 +80,10 @@ int main() {
             catch (const std::invalid_argument& x) {
                 std::cerr << "Incorrect information: " << x.what() << std::endl;
             }
+            catch (std::runtime_error& )
+            {
+                std::cerr << "Some kind of exception has happened..." << std::endl;
+            }
         }
 
         if (command == "remove")
@@ -89,6 +93,10 @@ int main() {
             }
             catch (const std::invalid_argument& x) {
                 std::cerr << "Incorrect information: " << x.what() << std::endl;
+            }
+            catch (std::runtime_error& )
+            {
+                std::cerr << "Some kind of exception has happened..." << std::endl;
             }
         }
         print(database);
