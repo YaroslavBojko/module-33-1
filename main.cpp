@@ -36,7 +36,7 @@ std::map<std::string, int> addProduct(std::map<std::string, int>& database)
 
     if (database.find(vendorСode) == database.end())
     {
-        throw std::invalid_argument(database.find(vendorСode) == database.end() ? "incorrect article" : "&&&");
+        throw std::invalid_argument(database.find(vendorСode) == database.end() ? "incorrect article" : "");
     } else
     {
         database[vendorСode] += quantity;
@@ -51,9 +51,9 @@ std::map<std::string, int> removeProduct(std::map<std::string, int>& database)
     std::cout << "Enter the article and quantity of the product: " << std::endl;
     std::cin >> vendorСode >> quantity;
 
-    if (database.find(vendorСode) == database.end())
+    if (database.find(vendorСode) == database.end() || database[vendorСode] - quantity < 0)
     {
-        throw std::invalid_argument(database.find(vendorСode) == database.end() ? "incorrect article" : "&&&");
+        throw std::invalid_argument(database.find(vendorСode) == database.end() ? "incorrect article" : "incorrect quantity");
     } else
     {
         database[vendorСode] -= quantity;
@@ -65,7 +65,6 @@ int main() {
     std::map<std::string, int> database;
     databaseEntry(database);
     print(database);
-
 
     std::string command;
     while (command != "exit")
