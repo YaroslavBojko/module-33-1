@@ -8,7 +8,7 @@ std::map<std::string, int> databaseEntry(std::map<std::string, int>& database)
     std::string vendorСode;
     int quantity;
 
-    for (int i = 0; i < 3; ++i)
+    for (int i = 0; i < 5; ++i)
     {
         std::cout << "Enter a pair of article and number of pieces: " << std::endl;
         std::cin >> vendorСode >> quantity;
@@ -51,21 +51,21 @@ void addProduct(std::map<std::string, int>& database, std::map<std::string, int>
 
 }
 
-std::map<std::string, int> removeProduct(std::map<std::string, int>& database)
+void removeProduct(std::map<std::string, int>& database, std::map<std::string, int>& basket)
 {
     std::string vendorСode;
     int quantity;
     std::cout << "Enter the article and quantity of the product: " << std::endl;
     std::cin >> vendorСode >> quantity;
 
-    if (database.find(vendorСode) == database.end() || database[vendorСode] - quantity < 0)
+    if (basket.find(vendorСode) == basket.end() || basket[vendorСode] - quantity < 0)
     {
-        throw std::invalid_argument(database.find(vendorСode) == database.end() ? "incorrect article" : "incorrect quantity");
+        throw std::invalid_argument(basket.find(vendorСode) == basket.end() ? "incorrect article" : "incorrect quantity");
     } else
     {
-        database[vendorСode] -= quantity;
+        basket[vendorСode] -= quantity;
+        database[vendorСode] += quantity;
     }
-    return database;
 }
 
 int main() {
@@ -97,7 +97,7 @@ int main() {
         if (command == "remove")
         {
             try {
-                removeProduct(database);
+                removeProduct(database, basket);
             }
             catch (const std::invalid_argument& x) {
                 std::cerr << "Incorrect information: " << x.what() << std::endl;
